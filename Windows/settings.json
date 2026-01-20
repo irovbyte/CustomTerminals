@@ -1,0 +1,138 @@
+{
+    "$help": "https://aka.ms/terminal-documentation",
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "actions": 
+    [
+        {
+            "command": 
+            {
+                "action": "sendInput",
+                "input": "exit\r"
+            },
+            "id": "User.sendInput.5BF89876"
+        },
+        {
+            "command": 
+            {
+                "action": "newTab",
+                "profile": "Ubuntu-24.04"
+            },
+            "id": "User.newTab.8C9F1904"
+        },
+        {
+            "command": 
+            {
+                "action": "newTab",
+                "profile": "Windows PowerShell"
+            },
+            "id": "User.newTab.C5CF5A05"
+        }
+    ],
+    "alwaysShowTabs": true,
+    "copyFormatting": "none",
+    "copyOnSelect": false,
+    "defaultProfile": "{1250b92b-f556-55df-a2b8-07a2ad923989}",
+    "firstWindowPreference": "defaultProfile",
+    "keybindings": 
+    [
+        {
+            "id": "User.newTab.8C9F1904",
+            "keys": "ctrl+w"
+        },
+        {
+            "id": "Terminal.CopyToClipboard",
+            "keys": "ctrl+c"
+        },
+        {
+            "id": "User.newTab.C5CF5A05",
+            "keys": "ctrl+p"
+        },
+        {
+            "id": "User.sendInput.5BF89876",
+            "keys": "ctrl+e"
+        },
+        {
+            "id": "Terminal.PasteFromClipboard",
+            "keys": "ctrl+v"
+        }
+    ],
+    "newTabMenu": 
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
+    "profiles": 
+    {
+        "defaults": 
+        {
+            "antialiasingMode": "grayscale",
+            "backgroundImage": "gradient",
+            "backgroundImageOpacity": 1,
+            "backgroundImageStretchMode": "fill",
+            "colorScheme": "Fluent Dark",
+            "cursorColor": "#FF4F7B",
+            "cursorShape": "bar",
+            "font": 
+            {
+                "face": "MesloLGS NF",
+                "size": 16
+            },
+            "icon": "\uf5b0",
+            "opacity": 1,
+            "padding": "8, 12, 8, 12",
+            "scrollbarState": "hidden",
+            "useAcrylic": true,
+            "acrylicOpacity": 0.65,
+            "experimental.rendering.forceFullRepaint": true
+        },
+        "list": 
+        [
+            {
+                "backgroundImage": null,
+                "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "hidden": false,
+                "name": "Windows PowerShell"
+            },
+            {
+                "backgroundImage": null,
+                "guid": "{1250b92b-f556-55df-a2b8-07a2ad923989}",
+                "hidden": false,
+                "name": "Ubuntu-24.04",
+                "source": "Microsoft.WSL"
+            }
+        ]
+    },
+    "schemes": 
+    [
+        {
+            "background": "#0B0B0D",
+            "black": "#1A1A1D",
+            "blue": "#4D6BFF",
+            "brightBlack": "#3A3A3D",
+            "brightBlue": "#6D86FF",
+            "brightCyan": "#7FFFFF",
+            "brightGreen": "#7FFFC2",
+            "brightPurple": "#D98CFF",
+            "brightRed": "#FF6F9C",
+            "brightWhite": "#FFFFFF",
+            "brightYellow": "#FFD27A",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#4DFFFF",
+            "foreground": "#E6E6E6",
+            "green": "#5FFFB0",
+            "name": "Fluent Dark",
+            "purple": "#C45CFF",
+            "red": "#FF4F7B",
+            "selectionBackground": "#FFFFFF",
+            "white": "#E6E6E6",
+            "yellow": "#FFB84D"
+        }
+    ],
+    "showTabsFullscreen": true,
+    "showTabsInTitlebar": true,
+    "theme": "system",
+    "themes": [],
+    "useAcrylicInTabRow": true
+}
