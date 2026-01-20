@@ -13,9 +13,24 @@ rm -rf "$TEMP_DIR"
 
 git clone --depth=1 https://github.com/irovbyte/CustomTerminals "$TEMP_DIR"
 
-
 cp "$TEMP_DIR/WSL/UbuntuZsh/.zshrc" "$HOME/.zshrc"
-cp "$TEMP_DIR/WSL/UbuntuZsh/.p10k.zsh" "$HOME/.p10k.zsh" 2>/dev/null || true
+
+echo ""
+echo "Выберите стиль Powerlevel10k:"
+echo "1) Установить готовую тему irovbyte"
+echo "2) Настроить Powerlevel10k вручную (p10k configure)"
+echo ""
+read -p "Ваш выбор: " STYLE
+
+if [ "$STYLE" = "1" ]; then
+    cp "$TEMP_DIR/WSL/UbuntuZsh/.p10k.zsh" "$HOME/.p10k.zsh"
+    echo "Установлена тема irovbyte."
+else
+    echo "Запуск конфигуратора Powerlevel10k..."
+    rm -f "$HOME/.p10k.zsh" 2>/dev/null || true
+    rm -f "$HOME/.zshrc.zwc" 2>/dev/null || true
+    exec zsh -c "p10k configure"
+fi
 
 rm -rf "$TEMP_DIR"
 
