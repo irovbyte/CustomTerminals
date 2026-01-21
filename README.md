@@ -173,7 +173,7 @@ WSL или Linux сам по себе не может сделать прозр�
 # **1. Установка зависимостей (универсально для всех дистрибутивов)**
 
 ```sh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/irovbyte/CustomTerminals/main/InstallDependencies.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/irovbyte/CustomTerminals/main/InstallDependencies.sh)"
 ```
 
 Скрипт автоматически определит ваш дистрибутив:
@@ -202,7 +202,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/irovbyte/CustomTerminals/m
 Этот этап запускается автоматически, но можно вызвать вручную:
 
 ```sh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/irovbyte/CustomTerminals/main/InstallConfig.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/irovbyte/CustomTerminals/main/InstallConfig.sh)"
 ```
 
 Скрипт:
