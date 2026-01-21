@@ -17,6 +17,7 @@ MAGENTA="\e[1;35m"
 alias lsa='ls -lah --group-directories-first --color=auto'
 alias zshp='exec zsh'
 alias zshedit='code ~/.zshrc'
+alias sys='uname -a && echo "" && lsb_release -a 2>/dev/null || cat /etc/os-release'
 
 # -----------------------------
 # Открытие Проводника Windows

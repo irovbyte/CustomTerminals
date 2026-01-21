@@ -240,6 +240,8 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/irovbyte/CustomTerminals
 | **zshedit** | открыть `.zshrc` в VS Code |
 | **open** | открыть Проводник Windows |
 | **update** | авто‑обновление системы (универсальное) |
+| **sys**     | показать информацию о системе и дистрибутиве |
+
 
 ---
 
