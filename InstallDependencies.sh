@@ -1,6 +1,15 @@
 #!/bin/bash
 
-echo "🔍 Проверка базовых инструментов..."
+# Цвета
+BOLD="\e[1m"
+RESET="\e[0m"
+CYAN="\e[1;36m"
+GREEN="\e[1;32m"
+YELLOW="\e[1;33m"
+RED="\e[1;31m"
+MAGENTA="\e[1;35m"
+
+echo -e "${CYAN}🔍 Проверка базовых инструментов...${RESET}"
 
 # ============================================================
 # Универсальная функция установки пакета
@@ -46,7 +55,7 @@ install_pkg() {
         fi
 
     else
-        echo "❌ Неизвестный дистрибутив."
+        echo -e "${RED}❌ Неизвестный дистрибутив.${RESET}"
         exit 1
     fi
 }
@@ -55,17 +64,17 @@ install_pkg() {
 # Проверка sudo (root не нуждается)
 # ============================================================
 if [ "$(id -u)" -eq 0 ]; then
-    echo "⚠️ Запуск под root — sudo не требуется."
+    echo -e "${YELLOW}⚠️ Запуск под root — sudo не требуется.${RESET}"
 else
     if ! command -v sudo >/dev/null 2>&1; then
-        echo "❌ sudo не найден."
-        printf "📥 Установить sudo сейчас? (y/n): "
+        echo -e "${RED}❌ sudo не найден.${RESET}"
+        printf "${BOLD}📥 Установить sudo сейчас? (y/n): ${RESET}"
         read ans
         if [[ "$ans" =~ ^[Yy]$ ]]; then
             install_pkg sudo
-            echo "✅ sudo установлен!"
+            echo -e "${GREEN}✅ sudo установлен!${RESET}"
         else
-            echo "⛔ sudo обязателен для установки."
+            echo -e "${RED}⛔ sudo обязателен для установки.${RESET}"
             exit 1
         fi
     fi
@@ -75,14 +84,14 @@ fi
 # Проверка curl
 # ============================================================
 if ! command -v curl >/dev/null 2>&1; then
-    echo "❌ curl не установлен."
-    printf "📥 Установить curl сейчас? (y/n): "
+    echo -e "${RED}❌ curl не установлен.${RESET}"
+    printf "${BOLD}📥 Установить curl сейчас? (y/n): ${RESET}"
     read ans
     if [[ "$ans" =~ ^[Yy]$ ]]; then
         install_pkg curl
-        echo "✅ curl установлен!"
+        echo -e "${GREEN}✅ curl установлен!${RESET}"
     else
-        echo "⛔ curl обязателен."
+        echo -e "${RED}⛔ curl обязателен.${RESET}"
         exit 1
     fi
 fi
@@ -91,14 +100,14 @@ fi
 # Проверка git
 # ============================================================
 if ! command -v git >/dev/null 2>&1; then
-    echo "❌ Git не установлен."
-    printf "📥 Установить git сейчас? (y/n): "
+    echo -e "${RED}❌ Git не установлен.${RESET}"
+    printf "${BOLD}📥 Установить git сейчас? (y/n): ${RESET}"
     read ans
     if [[ "$ans" =~ ^[Yy]$ ]]; then
         install_pkg git
-        echo "✅ Git установлен!"
+        echo -e "${GREEN}✅ Git установлен!${RESET}"
     else
-        echo "⛔ Git обязателен."
+        echo -e "${RED}⛔ Git обязателен.${RESET}"
         exit 1
     fi
 fi
@@ -107,20 +116,20 @@ fi
 # Проверка zsh
 # ============================================================
 if ! command -v zsh >/dev/null 2>&1; then
-    echo "❌ Zsh не установлен."
-    printf "📥 Установить zsh сейчас? (y/n): "
+    echo -e "${RED}❌ Zsh не установлен.${RESET}"
+    printf "${BOLD}📥 Установить zsh сейчас? (y/n): ${RESET}"
     read ans
     if [[ "$ans" =~ ^[Yy]$ ]]; then
         install_pkg zsh
-        echo "✅ Zsh установлен!"
+        echo -e "${GREEN}✅ Zsh установлен!${RESET}"
     else
-        echo "⛔ Zsh обязателен."
+        echo -e "${RED}⛔ Zsh обязателен.${RESET}"
         exit 1
     fi
 fi
 
-echo "✅ Все базовые инструменты установлены!"
-echo "🔍 Определение дистрибутива..."
+echo -e "${GREEN}✅ Все базовые инструменты установлены!${RESET}"
+echo -e "${CYAN}🔍 Определение дистрибутива...${RESET}"
 
 # ============================================================
 # Основная установка
@@ -132,30 +141,30 @@ install_packages() {
 }
 
 install_oh_my_zsh() {
-    echo "⚙️ Установка Oh My Zsh..."
+    echo -e "${MAGENTA}⚙️ Установка Oh My Zsh...${RESET}"
     export RUNZSH=no
     export CHSH=no
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 }
 
 install_powerlevel10k() {
-    echo "🎨 Установка Powerlevel10k..."
+    echo -e "${MAGENTA}🎨 Установка Powerlevel10k...${RESET}"
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k
 }
 
 install_plugins() {
-    echo "✨ Установка плагинов..."
+    echo -e "${MAGENTA}✨ Установка плагинов...${RESET}"
     git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
     git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 }
 
-echo "🚀 Начинаю установку зависимостей..."
+echo -e "${MAGENTA}🚀 Начинаю установку зависимостей...${RESET}"
 install_packages
 install_oh_my_zsh
 install_powerlevel10k
 install_plugins
 
-echo "✅ Установка зависимостей завершена!"
-echo "🚀 Запуск конфигурации..."
+echo -e "${GREEN}✅ Установка зависимостей завершена!${RESET}"
+echo -e "${MAGENTA}🚀 Запуск конфигурации...${RESET}"
 
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/irovbyte/CustomTerminals/main/InstallConfig.sh)"
