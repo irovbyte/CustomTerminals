@@ -24,25 +24,36 @@ open() {
 # Универсальное обновление системы + обновление irovbyte
 # -----------------------------
 update() {
+    # Определяем, root или нет
+    if [ "$(id -u)" -eq 0 ]; then
+        SUDO=""
+    else
+        SUDO="sudo"
+    fi
+
     # Обновление дистрибутива
     if command -v apt >/dev/null 2>&1; then
-        sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+        $SUDO apt update && $SUDO apt upgrade -y && $SUDO apt autoremove -y
+
     elif command -v pacman >/dev/null 2>&1; then
-        sudo pacman -Syu --noconfirm
+        $SUDO pacman -Syu --noconfirm
+
     elif command -v dnf >/dev/null 2>&1; then
-        sudo dnf upgrade --refresh -y
+        $SUDO dnf upgrade --refresh -y
+
     elif command -v zypper >/dev/null 2>&1; then
-        sudo zypper refresh && sudo zypper update -y
+        $SUDO zypper refresh && $SUDO zypper update -y
+
     elif command -v apk >/dev/null 2>&1; then
-        sudo apk update && sudo apk upgrade
+        $SUDO apk update && $SUDO apk upgrade
+
     else
-        echo "❌ Неизвестный пакетный менеджер. Обновление не выполнено."
+        echo -e "\e[1;31m❌ Неизвестный пакетный менеджер. Обновление не выполнено.\e[0m"
         return 1
     fi
 
-    # Обновление твоего проекта
     if [ -d "$HOME/.config/irovbyte" ]; then
-        echo "🔄 Updating irovbyte configs..."
+        echo -e "\e[1;36m🔄 Updating irovbyte configs...\e[0m"
         git -C "$HOME/.config/irovbyte" pull --rebase
     fi
 
