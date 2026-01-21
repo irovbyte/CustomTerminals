@@ -31,7 +31,7 @@ open() {
 }
 
 # -----------------------------
-# Универсальное обновление системы + обновление irovbyte
+# Умное обновление проекта irovbyte
 # -----------------------------
 update() {
     # Определяем sudo
@@ -54,13 +54,13 @@ update() {
         $SUDO apk update && $SUDO apk upgrade
     fi
 
-    echo -e "${CYAN}🔍 Checking for new irovbyte config updates...${RESET}"
+    echo -e "${CYAN}🔍 Проверка обновлений конфигов irovbyte...${RESET}"
 
     REPO="irovbyte/CustomTerminals"
     API_URL="https://api.github.com/repos/$REPO/commits/main"
     LOCAL_VERSION_FILE="$HOME/.config/irovbyte/.version"
 
-    # Получаем корректный SHA последнего коммита
+    # Получаем SHA последнего коммита
     LATEST_SHA=$(curl -s "$API_URL" | grep '"sha"' | head -n 1 | cut -d '"' -f 4)
 
     if [ -z "$LATEST_SHA" ]; then
@@ -82,7 +82,7 @@ update() {
         return 0
     fi
 
-    echo -e "${CYAN}🔄 Updating irovbyte configs...${RESET}"
+    echo -e "${CYAN}🔄 Обновление конфигов irovbyte...${RESET}"
 
     TEMP_DIR="$HOME/.irovbyte-update-temp"
     REPO_URL="https://github.com/$REPO"
@@ -92,7 +92,7 @@ update() {
 
     mkdir -p "$HOME/.config/irovbyte"
 
-    # Обновляем все конфиги, если они существуют
+    # Обновляем все конфиги
     [ -f "$TEMP_DIR/config.zsh" ] && cp "$TEMP_DIR/config.zsh" "$HOME/.config/irovbyte/config.zsh"
     [ -f "$TEMP_DIR/UnixLike/Zsh/.zshrc" ] && cp "$TEMP_DIR/UnixLike/Zsh/.zshrc" "$HOME/.zshrc"
     [ -f "$TEMP_DIR/UnixLike/Zsh/.p10k.zsh" ] && cp "$TEMP_DIR/UnixLike/Zsh/.p10k.zsh" "$HOME/.p10k.zsh"
@@ -105,4 +105,51 @@ update() {
     echo -e "${GREEN}✨ Конфиги обновлены до последней версии!${RESET}"
 
     exec zsh
+}
+
+# -----------------------------
+# Полное удаление irovbyte (uninstall)
+# -----------------------------
+irovremove() {
+    echo -e "${RED}${BOLD}⚠️ ВНИМАНИЕ: будет удалён весь irovbyte-config!${RESET}"
+    echo -e "${YELLOW}Удалятся файлы:${RESET}"
+    echo -e "  • ~/.config/irovbyte"
+    echo -e "  • ~/.zshrc"
+    echo -e "  • ~/.p10k.zsh"
+    echo ""
+
+    read -p "Продолжить? (y/n): " ans
+    if [[ "$ans" =~ ^[Yy]$ ]]; then
+        rm -rf "$HOME/.config/irovbyte"
+        rm -f "$HOME/.zshrc"
+        rm -f "$HOME/.p10k.zsh"
+        echo -e "${GREEN}✔ irovbyte полностью удалён.${RESET}"
+        exec zsh
+    else
+        echo -e "${CYAN}Отмена удаления.${RESET}"
+    fi
+}
+
+#-----------------------------
+# Справка по irovbyte-utils
+#-----------------------------
+helpirov() {
+    echo -e "\e[1;36m==============================\e[0m"
+    echo -e "\e[1;36m   Справка по irovbyte-utils  \e[0m"
+    echo -e "\e[1;36m==============================\e[0m"
+    echo ""
+    printf "%-15s %-50s\n" "Команда" "Описание"
+    printf "%-15s %-50s\n" "-------" "---------"
+
+    printf "%-15s %-50s\n" "lsa" "красивый вывод файлов"
+    printf "%-15s %-50s\n" "zshp" "перезапуск Zsh"
+    printf "%-15s %-50s\n" "zshedit" "открыть .zshrc в VS Code"
+    printf "%-15s %-50s\n" "open" "открыть Проводник Windows"
+    printf "%-15s %-50s\n" "update" "авто‑обновление системы и конфигов"
+    printf "%-15s %-50s\n" "sys" "информация о системе и дистрибутиве"
+    printf "%-15s %-50s\n" "irovremove" "полное удаление irovbyte-конфигов"
+    printf "%-15s %-50s\n" "helpirov" "показать эту справку"
+
+    echo ""
+    echo -e "\e[1;32mГотово! Используй команды с кайфом.\e[0m"
 }
