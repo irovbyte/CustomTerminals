@@ -1,38 +1,42 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "🔍 Проверка базовых инструментов..."
 
 # ============================================================
-# 1. Проверка sudo
+# 1. Проверка sudo (root не нуждается в sudo)
 # ============================================================
-if ! command -v sudo >/dev/null 2>&1; then
-    echo "❌ sudo не найден."
-    printf "📥 Установить sudo сейчас? (y/n): "
-    read install_sudo
+if [ "$(id -u)" -eq 0 ]; then
+    echo "⚠️ Запуск под root — sudo не требуется. Пропускаю проверку sudo."
+else
+    if ! command -v sudo >/dev/null 2>&1; then
+        echo "❌ sudo не найден."
+        printf "📥 Установить sudo сейчас? (y/n): "
+        read install_sudo
 
-    if [ "$install_sudo" = "y" ] || [ "$install_sudo" = "Y" ]; then
-        echo "🔧 Устанавливаю sudo..."
+        if [[ "$install_sudo" =~ ^[Yy]$ ]]; then
+            echo "🔧 Устанавливаю sudo..."
 
-        if command -v apt >/dev/null 2>&1; then
-            apt update && apt install -y sudo
-        elif command -v pacman >/dev/null 2>&1; then
-            pacman -Syu --noconfirm
-            pacman -S --noconfirm sudo
-        elif command -v dnf >/dev/null 2>&1; then
-            dnf install -y sudo
-        elif command -v zypper >/dev/null 2>&1; then
-            zypper install -y sudo
-        elif command -v apk >/dev/null 2>&1; then
-            apk add sudo
+            if command -v apt >/dev/null 2>&1; then
+                apt update && apt install -y sudo
+            elif command -v pacman >/dev/null 2>&1; then
+                pacman -Syu --noconfirm
+                pacman -S --noconfirm sudo
+            elif command -v dnf >/dev/null 2>&1; then
+                dnf install -y sudo
+            elif command -v zypper >/dev/null 2>&1; then
+                zypper install -y sudo
+            elif command -v apk >/dev/null 2>&1; then
+                apk add sudo
+            else
+                echo "❌ Неизвестный дистрибутив. Установка sudo невозможна."
+                exit 1
+            fi
+
+            echo "✅ sudo установлен!"
         else
-            echo "❌ Неизвестный дистрибутив. Установка sudo невозможна."
+            echo "⛔ sudo не установлен. Продолжение невозможно."
             exit 1
         fi
-
-        echo "✅ sudo установлен!"
-    else
-        echo "⛔ sudo не установлен. Продолжение невозможно."
-        exit 1
     fi
 fi
 
@@ -44,7 +48,7 @@ if ! command -v curl >/dev/null 2>&1; then
     printf "📥 Установить curl сейчас? (y/n): "
     read install_curl
 
-    if [ "$install_curl" = "y" ] || [ "$install_curl" = "Y" ]; then
+    if [[ "$install_curl" =~ ^[Yy]$ ]]; then
         echo "🔧 Устанавливаю curl..."
 
         if command -v apt >/dev/null 2>&1; then
@@ -78,7 +82,7 @@ if ! command -v git >/dev/null 2>&1; then
     printf "📥 Установить git сейчас? (y/n): "
     read install_git
 
-    if [ "$install_git" = "y" ] || [ "$install_git" = "Y" ]; then
+    if [[ "$install_git" =~ ^[Yy]$ ]]; then
         echo "🔧 Устанавливаю git..."
 
         if command -v apt >/dev/null 2>&1; then
@@ -112,7 +116,7 @@ if ! command -v zsh >/dev/null 2>&1; then
     printf "📥 Установить zsh сейчас? (y/n): "
     read install_zsh
 
-    if [ "$install_zsh" = "y" ] || [ "$install_zsh" = "Y" ]; then
+    if [[ "$install_zsh" =~ ^[Yy]$ ]]; then
         echo "🔧 Устанавливаю zsh..."
 
         if command -v apt >/dev/null 2>&1; then
@@ -142,7 +146,7 @@ echo "✅ Все базовые инструменты установлены!"
 echo "🔍 Определение дистрибутива..."
 
 # ============================================================
-# ОСНОВНОЙ БЛОК — ТЕПЕРЬ ОН ВСЕГДА ЗАПУСКАЕТСЯ
+# ОСНОВНОЙ БЛОК УСТАНОВКИ
 # ============================================================
 
 install_packages() {
@@ -192,7 +196,7 @@ install_plugins() {
     git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 }
 
-echo "🚀 Начинаем установку зависимостей..."
+echo "🚀 Начинаю установку зависимостей..."
 install_packages
 install_oh_my_zsh
 install_powerlevel10k
@@ -201,4 +205,4 @@ install_plugins
 echo "✅ Установка зависимостей завершена!"
 echo "🚀 Запуск конфигурации..."
 
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/irovbyte/CustomTerminals/main/InstallConfig.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/irovbyte/CustomTerminals/main/InstallConfig.sh)"

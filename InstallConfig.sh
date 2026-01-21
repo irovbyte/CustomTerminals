@@ -1,9 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "🎛 Установка конфигурации Zsh от irovbyte..."
 
+# Проверка git
 if ! command -v git >/dev/null 2>&1; then
     echo "❌ Git не установлен. Установите git через пакетный менеджер."
+    exit 1
+fi
+
+# Проверка zsh
+if ! command -v zsh >/dev/null 2>&1; then
+    echo "❌ Zsh не установлен. Установите zsh перед запуском конфигурации."
     exit 1
 fi
 
@@ -12,7 +19,10 @@ REPO_URL="https://github.com/irovbyte/CustomTerminals"
 
 echo "📥 Скачивание репозитория..."
 rm -rf "$TEMP_DIR"
-git clone --depth=1 "$REPO_URL" "$TEMP_DIR"
+git clone --depth=1 "$REPO_URL" "$TEMP_DIR" || {
+    echo "❌ Ошибка скачивания репозитория!"
+    exit 1
+}
 
 ZSH_DIR="$TEMP_DIR/UnixLike/Zsh"
 CONFIG_SRC="$TEMP_DIR/config.zsh"
@@ -27,7 +37,6 @@ fi
 echo "⚙️ Установка .zshrc..."
 cp "$ZSH_DIR/.zshrc" "$HOME/.zshrc"
 
-# Установка config.zsh
 echo "⚙️ Установка config.zsh..."
 rm -rf "$CONFIG_DEST"
 mkdir -p "$CONFIG_DEST"
