@@ -57,3 +57,18 @@ fi
 if [ -f "$CONFIG_FILE" ]; then
     source "$CONFIG_FILE"
 fi
+
+
+# ============================================================
+# UNI-SENTINEL (Auto-Installer & Alias)
+# ============================================================
+uni-sentinel() {
+    if [ ! -d "$HOME/.uni-sentinel" ]; then
+        echo "⚠️  Uni-Sentinel не найден."
+        echo "📥 Запускаю установку..."
+        # Замени irovbyte на свой ник, если он отличается в ссылке
+        bash <(curl -s https://raw.githubusercontent.com/irovbyte/Uni-Sentinel/main/install.sh)
+    else
+        python3 "$HOME/.uni-sentinel/main.py" "$@"
+    fi
+}

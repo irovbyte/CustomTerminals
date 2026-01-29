@@ -243,7 +243,7 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/irovbyte/CustomTerminals
 | **sys**      | показать информацию о системе и дистрибутиве  |
 | **helpirov** | показать список всех команд и алиасов         |
 | **irovremove** | полное удаление irovbyte‑конфигов           |
-
+|**uni-sentinel**| универсальный тестер кода                   |
 
 ---
 
